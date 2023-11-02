@@ -1,0 +1,17 @@
+services:
+  pages:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM ruby:3.2
+        WORKDIR /repo
+        COPY Gemfile Gemfile.lock /repo/
+        RUN bundle install
+    command: jekyll serve --host 0.0.0.0 --port 4000
+    ports:
+      - 4000:4000
+    volumes:
+      - type: bind
+        source: .
+        target: /repo
+    working_dir: /repo
